@@ -17,7 +17,7 @@ public class AccountService implements GetDefaultAccountUseCase, GetAccountByNum
 
     @Override
     public Account getDefaultSourceAccount() {
-        Optional<Account> defaultAccount = accountOutputPort.getAccountByNumber(123L);
+        Optional<Account> defaultAccount = accountOutputPort.getAccountByNumber("0245253419");
         if(defaultAccount.isEmpty()){
             throw new RuntimeException("error no default account config");
         }
@@ -25,7 +25,7 @@ public class AccountService implements GetDefaultAccountUseCase, GetAccountByNum
     }
 
     @Override
-    public Optional<Account> getAccountByNumber(Long accountNumber) {
+    public Optional<Account> getAccountByNumber(String accountNumber) {
         return accountOutputPort.getAccountByNumber(accountNumber);
     }
 }

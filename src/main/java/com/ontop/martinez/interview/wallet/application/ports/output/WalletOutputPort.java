@@ -1,9 +1,9 @@
 package com.ontop.martinez.interview.wallet.application.ports.output;
 
-import com.ontop.martinez.interview.transaction.domain.model.Transaction;
+import java.math.BigDecimal;
 
 public interface WalletOutputPort {
-    void createWalletTransaction(Transaction transaction);
+    Long createWalletTransaction(Long userId, BigDecimal amount);
 
-    Double getWalletBalance(Long userId);
+    BigDecimal getWalletBalance(Long userId);
 }

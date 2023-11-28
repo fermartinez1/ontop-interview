@@ -3,6 +3,8 @@ package com.ontop.martinez.interview.transaction.domain.model;
 import com.ontop.martinez.interview.account.domain.model.Account;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,9 +16,9 @@ public class Transaction {
     private Long timestamp;
     private Account destination;
     private Account source;
-    private Double amount;
-    private Double fee;
-    private Double totalAmount;
+    private BigDecimal amount;
+    private BigDecimal fee;
+    private BigDecimal totalAmount;
     private TransactionStatus status;
 
 }

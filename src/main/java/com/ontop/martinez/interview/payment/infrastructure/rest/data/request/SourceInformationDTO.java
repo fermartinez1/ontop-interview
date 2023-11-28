@@ -1,4 +1,4 @@
-package com.ontop.martinez.interview.wallet.infrastructure.output.rest.data.request;
+package com.ontop.martinez.interview.payment.infrastructure.rest.data.request;
 
 import lombok.Getter;
 import lombok.Setter;

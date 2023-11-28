@@ -2,14 +2,15 @@ package com.ontop.martinez.interview.transaction.infrastructure.input.rest.data;
 
 import lombok.*;
 
-@Builder
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionRequestDTO {
 
-    private Long accountNumber;
-    private Double amount;
+    private String accountNumber;
+    private BigDecimal amount;
 
 }

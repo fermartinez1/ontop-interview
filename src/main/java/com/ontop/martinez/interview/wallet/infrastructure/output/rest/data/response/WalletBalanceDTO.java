@@ -3,10 +3,12 @@ package com.ontop.martinez.interview.wallet.infrastructure.output.rest.data.resp
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 public class WalletBalanceDTO {
 
     Long user_id;
-    Double balance;
+    BigDecimal balance;
 }

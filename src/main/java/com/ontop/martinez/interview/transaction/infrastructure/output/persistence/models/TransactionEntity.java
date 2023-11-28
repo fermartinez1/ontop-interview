@@ -4,6 +4,8 @@ import com.ontop.martinez.interview.account.infrastructure.output.persistence.mo
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -20,5 +22,5 @@ public class TransactionEntity {
     private AccountEntity sourceAccount;
     @ManyToOne
     private AccountEntity destinationAccount;
-    private Double amount;
+    private BigDecimal amount;
 }

@@ -18,9 +18,9 @@ import lombok.Setter;
 public class AccountEntity {
 
     @Id
-    private Long accountNumber;
+    private String accountNumber;
     private String currency;
-    private Long routingNumber;
+    private String routingNumber;
     private String bankName;
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)

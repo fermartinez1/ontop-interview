@@ -17,11 +17,8 @@ public class AccountPersistenceAdapter implements AccountOutputPort {
     private final AccountRepository accountRepository;
     private final AccountPersistenceMapper accountPersistenceMapper;
     @Override
-    public Optional<Account> getAccountByNumber(Long accountNumber) {
+    public Optional<Account> getAccountByNumber(String accountNumber) {
         Optional<AccountEntity> account = accountRepository.findById(accountNumber);
-        if(account.isEmpty()){
-            return Optional.empty();
-        }
-        return Optional.ofNullable(accountPersistenceMapper.accountEntityToAccount(account.get()));
+        return account.map(accountPersistenceMapper::accountEntityToAccount);
     }
 }

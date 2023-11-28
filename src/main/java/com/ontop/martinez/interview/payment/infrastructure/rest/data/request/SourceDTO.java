@@ -1,4 +1,4 @@
-package com.ontop.martinez.interview.wallet.infrastructure.output.rest.data.request;
+package com.ontop.martinez.interview.payment.infrastructure.rest.data.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,8 +10,8 @@ public class SourceDTO {
 
     private String type;
     @JsonProperty("account")
-    private AccountDTO accountDTO;
+    private AccountDTO account;
     @JsonProperty("sourceInformation")
-    private SourceInformationDTO sourceInformationDTO;
+    private SourceInformationDTO sourceInformation;
 
 }

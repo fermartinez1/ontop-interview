@@ -6,5 +6,5 @@ import java.util.Optional;
 
 public interface GetAccountByNumberUseCase {
 
-    Optional<Account> getAccountByNumber(Long accountNumber);
+    Optional<Account> getAccountByNumber(String accountNumber);
 }

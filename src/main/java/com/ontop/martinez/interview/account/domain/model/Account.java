@@ -10,9 +10,9 @@ import lombok.*;
 @NoArgsConstructor
 public class Account {
 
-    private Long accountNumber;
+    private String accountNumber;
     private String currency;
-    private Long routingNumber;
+    private String routingNumber;
     private String bankName;
     private User user;
 }

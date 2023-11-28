@@ -1,14 +1,19 @@
 package com.ontop.martinez.interview.wallet.infrastructure.output.rest.data.request;
 
+
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
-public class DestinationDTO {
+@Builder
+public class WalletTransactionRequestDTO {
 
-    private String name;
-    @JsonProperty("account")
-    private AccountDTO accountDTO;
+    BigDecimal amount;
+    @JsonProperty("user_id")
+    Long userId;
 }

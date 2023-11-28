@@ -1,6 +1,7 @@
 package com.ontop.martinez.interview.user.domain.services;
 
 import com.ontop.martinez.interview.user.application.ports.input.GetDefaultSourceUserUseCase;
+import com.ontop.martinez.interview.user.application.ports.input.GetUserByIdUseCase;
 import com.ontop.martinez.interview.user.application.ports.output.UserOutputPort;
 import com.ontop.martinez.interview.user.domain.model.User;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
-public class UserService implements GetDefaultSourceUserUseCase {
+public class UserService implements GetDefaultSourceUserUseCase, GetUserByIdUseCase {
 
     private final UserOutputPort userOutputPort;
 
@@ -21,5 +22,10 @@ public class UserService implements GetDefaultSourceUserUseCase {
             throw new RuntimeException("error no default user config");
         }
         return userOutputPort.getUserById(1L).get();
+    }
+
+    @Override
+    public Optional<User> getUserById(Long id) {
+        return userOutputPort.getUserById(id);
     }
 }

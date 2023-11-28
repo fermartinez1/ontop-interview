@@ -18,7 +18,7 @@ public abstract class UserEntity {
     @Id
     private Long id;
     private String countryId;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany
     private List<AccountEntity> accounts;
 
 }

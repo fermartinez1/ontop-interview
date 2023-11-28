@@ -1,6 +1,8 @@
 package com.ontop.martinez.interview.wallet.application.ports.input;
 
+import java.math.BigDecimal;
+
 public interface GetWalletBalanceUseCase {
 
-    Double getWalletBalance(Long userId);
+    BigDecimal getWalletBalance(Long userId);
 }
