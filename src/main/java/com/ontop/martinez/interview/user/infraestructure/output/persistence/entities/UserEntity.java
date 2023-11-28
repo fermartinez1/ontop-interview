@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class UserEntity {
+public class UserEntity {
 
     @Id
     private Long id;

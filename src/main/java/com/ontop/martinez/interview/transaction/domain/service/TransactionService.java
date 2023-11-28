@@ -18,6 +18,7 @@ import com.ontop.martinez.interview.wallet.application.ports.input.GetWalletBala
 import com.ontop.martinez.interview.wallet.domain.exception.WalletTransactionException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,6 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TransactionService implements CreateTransactionUseCase {
 
     private final TransactionOutputPort transactionOutputPort;
@@ -54,19 +56,20 @@ public class TransactionService implements CreateTransactionUseCase {
             transaction.setPaymentProviderTransactionId(result.get().getPaymentId());
         } catch (WalletTransactionException exception) {
             transaction.setStatus(TransactionStatus.FAILED_BY_WALLET);
-            transactionOutputPort.saveTransaction(transaction);
+            transaction = transactionOutputPort.saveTransaction(transaction);
             return transaction;
         } catch (ProviderPaymentException exception) {
             transaction.setStatus(TransactionStatus.FAILED_BY_PROVIDER);
-            transactionOutputPort.saveTransaction(transaction);
+            transaction = transactionOutputPort.saveTransaction(transaction);
             createWalletWithdrawTransactionUseCase.createWalletWithdrawTransaction(transaction.getDestination().getUser().getId(), transaction.getTotalAmount());
             return transaction;
         } catch (Exception exception) {
             transaction.setStatus(TransactionStatus.FAILED);
-            transactionOutputPort.saveTransaction(transaction);
+            transaction = transactionOutputPort.saveTransaction(transaction);
+            log.error("Transaction failed due to: " + exception.getMessage());
         }
 
-        transactionOutputPort.saveTransaction(transaction);
+        transaction = transactionOutputPort.saveTransaction(transaction);
         return transaction;
     }
 
@@ -87,7 +90,7 @@ public class TransactionService implements CreateTransactionUseCase {
         transaction.setSource(account);
 
         transaction.setStatus(TransactionStatus.CREATED);
-        transactionOutputPort.saveTransaction(transaction);
+        transaction = transactionOutputPort.saveTransaction(transaction);
         return transaction;
     }
 

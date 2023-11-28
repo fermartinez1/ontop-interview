@@ -15,4 +15,8 @@ public interface UserPersistenceMapper {
    @SubclassMapping(source = CompanyEntity.class, target = Company.class)
    @SubclassMapping(source = PersonEntity.class, target = Person.class)
    User userEntityToUser(UserEntity userEntity);
+
+   @SubclassMapping(source = Company.class, target = CompanyEntity.class)
+   @SubclassMapping(source = Person.class, target = PersonEntity.class)
+   UserEntity userToUserEntity(User user);
 }

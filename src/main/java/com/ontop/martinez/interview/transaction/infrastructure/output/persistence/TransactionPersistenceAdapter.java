@@ -16,7 +16,7 @@ public class TransactionPersistenceAdapter implements TransactionOutputPort {
     private final TransactionPersistenceMapper transactionPersistenceMapper;
 
     @Override
-    public void saveTransaction(Transaction transaction) {
-        transactionRepository.save(transactionPersistenceMapper.toTransactionEntity(transaction));
+    public Transaction saveTransaction(Transaction transaction) {
+        return transactionPersistenceMapper.transactionEntityToTransaction(transactionRepository.save(transactionPersistenceMapper.toTransactionEntity(transaction)));
     }
 }

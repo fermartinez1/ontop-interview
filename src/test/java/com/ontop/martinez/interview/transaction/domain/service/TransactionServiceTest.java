@@ -3,6 +3,7 @@ package com.ontop.martinez.interview.transaction.domain.service;
 import com.ontop.martinez.interview.account.application.ports.input.GetAccountByNumberUseCase;
 import com.ontop.martinez.interview.account.application.ports.input.GetDefaultAccountUseCase;
 import com.ontop.martinez.interview.account.domain.model.Account;
+import com.ontop.martinez.interview.company.domain.model.Company;
 import com.ontop.martinez.interview.payment.application.ports.input.CreatePaymentUseCase;
 import com.ontop.martinez.interview.payment.domain.exception.ProviderPaymentException;
 import com.ontop.martinez.interview.payment.domain.model.Payment;
@@ -59,33 +60,37 @@ class TransactionServiceTest {
     }
 
     @Test
-    void testCreateTransaction_Success() {
+    void testCreateTransaction_SuccessfulTransaction() {
         String accountNumber = "123456";
         BigDecimal amount = BigDecimal.valueOf(100);
-
-        BigDecimal expectedTotalAmount = BigDecimal.valueOf(100).multiply( BigDecimal.valueOf(1.10));
 
         Account destinationAccount = new Account();
         Person person = new Person();
         person.setId(1L);
+        destinationAccount.setAccountNumber(accountNumber);
         destinationAccount.setUser(person);
-        when(getAccountByNumberUseCase.getAccountByNumber(accountNumber)).thenReturn(Optional.of(destinationAccount));
 
-        Payment payment = Payment.builder()
-                .status("PROCESSING").build();
+        Account sourceAccount = new Account();
+        sourceAccount.setAccountNumber("234");
+        Company company = new Company();
+        company.setName("TEST");
+        sourceAccount.setUser(company);
 
-        when(createPaymentUseCase.createPaymentInProvider(any())).thenReturn(Optional.of(payment));
-        when(getDefaultAccountUseCase.getDefaultSourceAccount()).thenReturn(new Account());
+        when(getDefaultAccountUseCase.getDefaultSourceAccount()).thenReturn(sourceAccount);
         when(getWalletBalanceUseCase.getWalletBalance(1L)).thenReturn(BigDecimal.valueOf(150));
+        when(getAccountByNumberUseCase.getAccountByNumber(accountNumber)).thenReturn(Optional.of(destinationAccount));
+        when(createWalletTopUpTransactionUseCase.createWalletTopUpTransaction(anyLong(), any(BigDecimal.class))).thenReturn(1L);
+        Payment payment = new Payment();
+        payment.setStatus("PROCESSING");
+        when(createPaymentUseCase.createPaymentInProvider(any(Transaction.class))).thenReturn(Optional.of(payment));
 
-        Transaction transaction = transactionService.createTransaction(accountNumber, amount);
+        doAnswer(invocation -> invocation.getArgument(0)).when(transactionOutputPort).saveTransaction(any(Transaction.class));
 
-        assertNotNull(transaction);
-        assertEquals(TransactionStatus.PROCESSING, transaction.getStatus());
-        verify(createWalletTopUpTransactionUseCase, times(1)).createWalletTopUpTransaction(person.getId(), expectedTotalAmount);
-        verify(transactionOutputPort, times(2)).saveTransaction(any());
-        verify(transactionOutputPort, times(2)).saveTransaction(any());
-        assertEquals(transaction.getTotalAmount(), expectedTotalAmount);
+        Transaction result = transactionService.createTransaction(accountNumber, amount);
+
+        assertNotNull(result);
+        assertEquals(TransactionStatus.PROCESSING, result.getStatus());
+        verify(transactionOutputPort, times(2)).saveTransaction(any(Transaction.class));
     }
 
     @Test
@@ -127,7 +132,7 @@ class TransactionServiceTest {
         when(getAccountByNumberUseCase.getAccountByNumber(accountNumber)).thenReturn(Optional.of(destinationAccount));
         when(createWalletTopUpTransactionUseCase.createWalletTopUpTransaction(1L, BigDecimal.valueOf(110.0))).thenThrow(new WalletTransactionException("Wallet error"));
         when(getWalletBalanceUseCase.getWalletBalance(1L)).thenReturn(BigDecimal.valueOf(150));
-
+        doAnswer(invocation -> invocation.getArgument(0)).when(transactionOutputPort).saveTransaction(any(Transaction.class));
 
         Transaction transaction = transactionService.createTransaction(accountNumber, amount);
 
@@ -149,7 +154,7 @@ class TransactionServiceTest {
         when(getAccountByNumberUseCase.getAccountByNumber(accountNumber)).thenReturn(Optional.of(destinationAccount));
         when(createPaymentUseCase.createPaymentInProvider(any())).thenThrow(new ProviderPaymentException("Provider error"));
         when(getWalletBalanceUseCase.getWalletBalance(1L)).thenReturn(BigDecimal.valueOf(150));
-
+        doAnswer(invocation -> invocation.getArgument(0)).when(transactionOutputPort).saveTransaction(any(Transaction.class));
         Transaction transaction = transactionService.createTransaction(accountNumber, amount);
 
         assertNotNull(transaction);

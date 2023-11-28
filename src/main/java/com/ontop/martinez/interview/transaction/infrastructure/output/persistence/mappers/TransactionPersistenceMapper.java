@@ -14,4 +14,9 @@ public interface TransactionPersistenceMapper {
     @Mapping(target = "destinationAccount", source = "transaction.source")
     TransactionEntity toTransactionEntity(Transaction transaction);
 
+    @Mapping(target = "amount", source = "transactionEntity.amount")
+    @Mapping(target = "destination", source = "transactionEntity.sourceAccount")
+    @Mapping(target = "source", source = "transactionEntity.destinationAccount")
+    Transaction transactionEntityToTransaction(TransactionEntity transactionEntity);
+
 }

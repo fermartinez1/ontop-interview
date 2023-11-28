@@ -69,6 +69,7 @@ public class PaymentRestAdapter implements PaymentOutputPort {
 
     }
 
+    //TODO this should be part of the mapper
     private static void setSourceFields(Payment payment, PaymentDTO paymentDTO) {
         if (payment.getSource().getUser() instanceof Company) {
             paymentDTO.getSource().setType("COMPANY");

@@ -12,4 +12,8 @@ public interface AccountPersistenceMapper {
 
     @Mapping(target = "user", source = "accountEntity.userEntity")
     Account accountEntityToAccount(AccountEntity accountEntity);
+
+    @Mapping(target = "userEntity", source = "account.user")
+    AccountEntity accountToAccountEntity(Account account);
+
 }
