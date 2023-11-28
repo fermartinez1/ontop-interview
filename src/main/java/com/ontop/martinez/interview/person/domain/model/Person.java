@@ -9,8 +9,7 @@ import lombok.Setter;
 public class Person extends User {
 
     private Long id;
-    private String name;
+    private Long birthDate;
     private String lastname;
-    private String countryId;
 
 }

@@ -16,5 +16,6 @@ public class Payment {
     private Account source;
     private Account destination;
     private String status;
+    private String paymentId;
 
 }

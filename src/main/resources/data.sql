@@ -1,11 +1,11 @@
-INSERT INTO "users" ("id", "country_id") VALUES (1, '1');
-INSERT INTO "companies" ("id", "name") VALUES (1,'ONTOP INC');
+INSERT INTO "users" ("id", "name") VALUES (1, 'ONTOP INC');
+INSERT INTO "companies" ("id", "foundation_date") VALUES (1,1606593534000);
 
-INSERT INTO "users" ("id", "country_id") VALUES (2, '1');
-INSERT INTO "persons" ("id", "name", "lastname") VALUES (2,'TONY', 'STARK');
+INSERT INTO "users" ("id", "name") VALUES (2, 'TONY');
+INSERT INTO "persons" ("id", "lastname", "birth_date") VALUES (2,'STARK', 682804734000);
 
-INSERT INTO "users" ("id", "country_id") VALUES (3, '1');
-INSERT INTO "persons" ("id", "name", "lastname") VALUES (3,'JAMES', 'FAILED');
+INSERT INTO "users" ("id", "name") VALUES (3, 'JAMES');
+INSERT INTO "persons" ("id", "lastname", "birth_date") VALUES (3, 'FAILED', 682804734000);
 
 
 INSERT INTO "accounts" ("account_number", "currency", "routing_number", "bank_name", "user_id") VALUES ('1885226711','USD', '211927207', 'BBVA', 2);

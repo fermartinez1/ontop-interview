@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class Company extends User {
 
-    private String name;
+    private Long foundationDate;
 
 }

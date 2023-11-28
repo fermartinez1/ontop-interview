@@ -47,9 +47,11 @@ public class TransactionService implements CreateTransactionUseCase {
         Transaction transaction = checkIsValidAndCreateTransaction(accountNumber, amount);
 
         try {
-            createWalletTopUpTransactionUseCase.createWalletTopUpTransaction(transaction.getDestination().getUser().getId(), transaction.getTotalAmount());
+            Long walletId = createWalletTopUpTransactionUseCase.createWalletTopUpTransaction(transaction.getDestination().getUser().getId(), transaction.getTotalAmount());
             Optional<Payment> result = createPaymentUseCase.createPaymentInProvider(transaction);
             transaction.setStatus(TransactionStatus.valueOfString(result.get().getStatus()));
+            transaction.setWalletTransactionId(walletId.toString());
+            transaction.setPaymentProviderTransactionId(result.get().getPaymentId());
         } catch (WalletTransactionException exception) {
             transaction.setStatus(TransactionStatus.FAILED_BY_WALLET);
             transactionOutputPort.saveTransaction(transaction);

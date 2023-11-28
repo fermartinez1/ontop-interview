@@ -15,5 +15,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CompanyEntity extends UserEntity {
 
-    private String name;
+    private Long foundationDate;
 }

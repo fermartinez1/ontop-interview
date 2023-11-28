@@ -20,5 +20,7 @@ public class Transaction {
     private BigDecimal fee;
     private BigDecimal totalAmount;
     private TransactionStatus status;
+    private String walletTransactionId;
+    private String paymentProviderTransactionId;
 
 }

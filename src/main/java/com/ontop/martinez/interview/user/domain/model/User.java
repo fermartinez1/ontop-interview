@@ -12,7 +12,7 @@ import java.util.List;
 public class User {
 
     private Long id;
-    private String countryId;
+    private String name;
     private List<Account> account;
 
 }

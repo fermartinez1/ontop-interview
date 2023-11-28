@@ -33,28 +33,24 @@ public class PaymentRestAdapter implements PaymentOutputPort {
         try {
             PaymentDTO paymentDTO = paymentMapper.paymentToPaymentDto(payment);
 
-
             setSourceFields(payment, paymentDTO);
             setDestinationFields(payment, paymentDTO);
-
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<PaymentDTO> requestEntity = new HttpEntity<>(paymentDTO, headers);
-
             RestTemplate restTemplate = new RestTemplate();
             URI uri = new URI(URL_PAYMENT_PROVIDER);
-
 
             ResponseEntity<String> responseEntity = restTemplate.postForEntity(uri, requestEntity, String.class);
 
             if (responseEntity.getStatusCode() == HttpStatus.OK) {
                 ObjectMapper mapper = new ObjectMapper();
                 PaymentResponseDTO paymentResponseDTO = mapper.readValue(responseEntity.getBody(), PaymentResponseDTO.class);
+                payment.setPaymentId(paymentResponseDTO.getPaymentInfoDTO().getId());
                 payment.setStatus(paymentResponseDTO.getRequestInfoDTO().getStatus());
                 log.info("Provider payment success with status: " + payment.getStatus());
             } else {
                 log.info("Provider payment failed");
-                return Optional.empty();
             }
             return Optional.of(payment);
         } catch (Exception ex) {

@@ -1,6 +1,5 @@
 package com.ontop.martinez.interview.person.infrastructure.persistence.models;
 
-
 import com.ontop.martinez.interview.user.infraestructure.output.persistence.entities.UserEntity;
 import jakarta.persistence.Entity;
 import lombok.*;
@@ -13,8 +12,6 @@ import lombok.*;
 @NoArgsConstructor
 public class PersonEntity extends UserEntity {
 
-    private String name;
+    private Long birthDate;
     private String lastname;
-
-
 }

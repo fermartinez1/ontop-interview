@@ -17,7 +17,7 @@ public abstract class UserEntity {
 
     @Id
     private Long id;
-    private String countryId;
+    private String name;
     @OneToMany
     private List<AccountEntity> accounts;
 
